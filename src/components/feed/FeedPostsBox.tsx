@@ -1,0 +1,42 @@
+import { getAuthSession } from '@/lib/auth'
+import React from 'react'
+import CreatePostActivator from './CreatePostActivator'
+import FeedColumn from './FeedColumn'
+import { db } from '@/lib/Prisma.db'
+import { INFINITE_SCROLL_PAGINATION_RESULTS } from '@/config'
+import { notFound } from 'next/navigation'
+
+async function FeedPostsBox() {
+    const session = await getAuthSession()
+    const myPost = await db.post.findMany({
+      include:{
+          like: true,
+          author: true,
+          comments: true,
+      },
+      orderBy: {
+          createdAt: 'desc'
+      },
+      take: INFINITE_SCROLL_PAGINATION_RESULTS,
+  })
+// console.log(myPost);
+
+
+if (!myPost) return notFound()
+  return (
+    <div className='py-5 px-0'>
+        <div className="-mx-3 -mt-3 last:-mb-3 md:flex ">
+            {/* MIDDLE COLUMN  --> */}
+            <div className="block basis-0 grow shrink p-3 max-h-[642px] md:flex-none md:w-[66.66666674%] md:max-h-[555px] overflow-y-auto hidescrollbar  ">
+                { session?.user?.image && <CreatePostActivator image={session?.user?.image} />}
+                {/* @ts-ignore */}
+                {myPost && <FeedColumn initialPosts={myPost} />}
+            </div>
+            {/* RIGHT COLUMN  --> */}
+            <div className="block basis-0 grow shrink p-3 md:flex-none md:w-[33.33333337%] "></div>
+        </div>
+    </div>
+  )
+}
+
+export default FeedPostsBox

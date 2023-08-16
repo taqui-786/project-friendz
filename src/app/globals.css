@@ -1,0 +1,226 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+ 
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 20 14.3% 4.1%;
+ 
+    --muted: 60 4.8% 95.9%;
+    --muted-foreground: 25 5.3% 44.7%;
+ 
+    --popover: 0 0% 100%;
+    --popover-foreground: 20 14.3% 4.1%;
+ 
+    --card: 0 0% 100%;
+    --card-foreground: 20 14.3% 4.1%;
+ 
+    --border: 20 5.9% 90%;
+    --input: 20 5.9% 90%;
+ 
+    --primary: 24 9.8% 10%;
+    --primary-foreground: 60 9.1% 97.8%;
+ 
+    --secondary: 60 4.8% 95.9%;
+    --secondary-foreground: 24 9.8% 10%;
+ 
+    --accent: 60 4.8% 95.9%;
+    --accent-foreground: 24 9.8% 10%;
+ 
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 60 9.1% 97.8%;
+ 
+    --ring: 24 5.4% 63.9%;
+ 
+    --radius: 0.5rem;
+  }
+ 
+  .dark {
+    --background: 20 14.3% 4.1%;
+    --foreground: 60 9.1% 97.8%;
+ 
+    --muted: 12 6.5% 15.1%;
+    --muted-foreground: 24 5.4% 63.9%;
+ 
+    --popover: 20 14.3% 4.1%;
+    --popover-foreground: 60 9.1% 97.8%;
+ 
+    --card: 20 14.3% 4.1%;
+    --card-foreground: 60 9.1% 97.8%;
+ 
+    --border: 12 6.5% 15.1%;
+    --input: 12 6.5% 15.1%;
+ 
+    --primary: 60 9.1% 97.8%;
+    --primary-foreground: 24 9.8% 10%;
+ 
+    --secondary: 12 6.5% 15.1%;
+    --secondary-foreground: 60 9.1% 97.8%;
+ 
+    --accent: 12 6.5% 15.1%;
+    --accent-foreground: 60 9.1% 97.8%;
+ 
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 85.7% 97.3%;
+ 
+    --ring: 12 6.5% 15.1%;
+  }
+}
+body {
+  background: #f4f4f4;
+  height: 100%;
+  width: 100%;
+  min-height: 100vh;
+  color: #344258;
+  overflow: hidden;
+}
+
+/* /// CUSTOM STYLES // */
+
+/* SIGNIN  */
+.signin_animate{
+  animation: gradientShift 12s ease infinite;
+
+}
+.signin_text_shadow{
+  text-shadow: 4px 4px #3180e1, 8px 8px #3180e1;
+}
+
+.slide_link_active{
+  border-color: #3d70b2;
+  font-weight: 500;
+  color: #3d70b2;
+}
+.slide_link_active svg{
+  color: #3d70b2;
+}
+.popupbox::before{ 
+  border-bottom-color: #dcdcdc;
+  border-width: 9px;
+  left: 42px;
+  margin-left: -9px;
+}
+.popupbox::before,.popupbox::after{ 
+  position: absolute;
+  pointer-events: none;
+  border: solid transparent;
+  bottom: 100%;
+  content: "";
+  height: 0;
+  width: 0;
+}
+.popupbox::after {
+  border-bottom-color: #fff;
+  border-width: 8px;
+  left: 42px;
+  margin-left: -8px;
+}
+
+/* HIDING SLIDE BAR CLASS AND MAKING HOME WIDTH FULL-->  */
+.slidebar_hide{
+  transform: translate(-100%);
+}
+.homepage_full{
+  width: 100%;
+  margin-left: 0;
+}
+.home_width{
+  width: calc(100% - 280px);
+}
+/* SCROLLBAR HIDE  */
+.hidescrollbar::-webkit-scrollbar{
+  display: none;
+}
+/* LOADING ANIMATION  */
+.loads{
+  animation-duration: 1s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+    animation-name: placeload;
+    animation-timing-function: linear;
+    background: linear-gradient(to right,#eeeeee 8%,#dddddd 18%,#eeeeee 33%);
+    background-size: 1200px 104px;
+    position: relative;
+}
+/* CUSTOM PAGE LOADER FOR PROFILE AND POST  */
+.loader {
+  width: 48px;
+  height: 48px;
+  position: relative;
+}
+.loader::before , .loader::after{
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50% , -50%);
+  width: 48em;
+  height: 48em;
+  background-image:
+    radial-gradient(circle 10px, #3180e1 100%, transparent 0),
+    radial-gradient(circle 10px, #3180e1 100%, transparent 0),
+    radial-gradient(circle 10px, #3180e1 100%, transparent 0),
+    radial-gradient(circle 10px, #3180e1 100%, transparent 0),
+    radial-gradient(circle 10px, #3180e1 100%, transparent 0),
+    radial-gradient(circle 10px, #3180e1 100%, transparent 0),
+    radial-gradient(circle 10px, #3180e1 100%, transparent 0),
+    radial-gradient(circle 10px, #3180e1 100%, transparent 0);
+  background-position: 0em -18em, 0em 18em, 18em 0em, -18em 0em,
+                       13em -13em, -13em -13em, 13em 13em, -13em 13em;
+    background-repeat: no-repeat;
+  font-size: 0.5px;
+  border-radius: 50%;
+  animation: blast 1s ease-in infinite;
+}
+.loader::after {
+  font-size: 1px;
+  background: #3180e1;
+  animation: bounce 1s ease-in infinite;
+}
+
+@keyframes bounce {
+  0% , 100%{ font-size: 0.75px }
+  50% { font-size: 1.5px }
+}
+@keyframes blast {
+  0% , 40% {
+    font-size: 0.5px;
+  }
+  70% {
+    opacity: 1;
+    font-size: 4px;
+  }
+   100% {
+     font-size: 6px;
+    opacity: 0;
+  }
+}
+@keyframes placeload {
+  0% {
+    background-position: -468px 0;
+}
+
+100% {
+    background-position: 468px 0;
+}
+}
+@media (max-width:768px){
+  .home_width{
+    width: 100%;
+    margin-left: 0;
+  }
+  .myslidebar{
+    transform: translate(-100%)
+  }
+}
+/* ---------------------------- */
+/* ------- */
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}

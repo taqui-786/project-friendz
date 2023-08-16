@@ -1,0 +1,112 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  id                String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId            String  @db.ObjectId
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  sessionToken String   @unique
+  userId       String   @db.ObjectId
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id                  String        @id @default(auto()) @map("_id") @db.ObjectId
+  name                String?
+  email               String?       @unique
+  emailVerified       DateTime?
+  username            String?       @unique
+  image               String?
+  onboardingCompleted Boolean?      @default(false)
+  accounts            Account[]
+  sessions            Session[]
+  Post                Post[]
+  like                Like[]
+  Comment             Comment[]
+  CommentVote         CommentVote[]
+  followers           Follows[]     @relation("following")
+  following           Follows[]     @relation("follower")
+}
+
+model Post {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  title     String
+  content   Json?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  author    User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  authorId  String    @db.ObjectId
+  comments  Comment[]
+  like      Like[]
+}
+
+model Like {
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  user   User   @relation(fields: [userId], references: [id])
+  userId String @db.ObjectId
+  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId String @db.ObjectId
+}
+
+model Comment {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  text      String
+  createdAt DateTime @default(now())
+  author    User     @relation(fields: [authorId], references: [id])
+  authorId  String   @db.ObjectId
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId    String   @db.ObjectId
+
+  replyToId String?   @db.ObjectId
+  replyTo   Comment?  @relation("ReplyTo", fields: [replyToId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  replies   Comment[] @relation("ReplyTo")
+
+  like      CommentVote[]
+  commentId String?       @db.ObjectId
+}
+
+model CommentVote {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  user      User    @relation(fields: [userId], references: [id])
+  userId    String  @db.ObjectId
+  comment   Comment @relation(fields: [commentId], references: [id], onDelete: Cascade)
+  commentId String  @db.ObjectId
+}
+
+model Follows {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  follower    User  @relation("follower", fields: [followerId], references: [id])
+  followerId  String @db.ObjectId
+  following   User   @relation("following", fields: [followingId], references: [id])
+  followingId String @db.ObjectId
+
+  // @@id([followerId, followingId])
+}
+
+// COMMANDS PRISMA 
+// 1 . npx prisma db push
+// 2.  npx prisma generate
