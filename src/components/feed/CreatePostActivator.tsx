@@ -20,7 +20,7 @@ const CreatePostActivator:FC<CreatePostActivatorprops>  = ({image}) => {
                     <div className="rounded-xl">
                         <div className="p-8 border border-[#e8e8e8]">
                             <div className="flex justify-center items-center">
-                                { image && <Image src={image} alt='user' height={42} width={42} className='rounded-full w-full h-auto max-h-[42px]' loading='eager' priority />}
+                                { image && <Image src={image} alt='user' height={44} width={44} className='rounded-full w-11 h-11' loading='eager' priority />}
                                 <div className="ml-12  w-full clear-both  relative sm:ml-4">
                                     <h3 className='text-[.9rem] '>Write Somethig here to create post...</h3>
                                 </div>
