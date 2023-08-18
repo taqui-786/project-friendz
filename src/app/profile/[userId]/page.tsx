@@ -20,6 +20,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import EditProfile from "@/components/EditProfile";
+import BasicInfoWidget from "@/components/BasicInfoWidget";
 
 
 interface profilepageprops {
@@ -131,10 +132,10 @@ const Profile = async ({ params }: profilepageprops) => {
                     {/* USER NAME  */}
                     <div className="text-center w-2/4 mt-10">
                       <h2 className="text-[#393a4f] font-semibold ">
-                        {user?.name}
+                        {user?.username}
                       </h2>
                       <span className="block text-sm text-[#999]">
-                        {user?.email}
+                        {user?.name}
                       </span>
                     </div>
                     <div className="text-right w-1/4 ">
@@ -152,62 +153,13 @@ const Profile = async ({ params }: profilepageprops) => {
             </div>
             {/* POST SIDE  */}
             <div className=" -mx-3 -mt-3 last:mb-3 md:flex">
-              <div className="block p-3 w-full  md:w-[33.33333337%] basis-0 grow shrink md:flex-none ">
-                {/* WIDGET HEADING  */}
-                <div className="w-full p-2 rounded-sm border border-[#e8e8e8] bg-white flex justify-center items-center">
-                  <h4 className="font-medium px-[6px]">Basic Infos</h4>
-                </div>
-                {/* WIDGET BODY */}
-                <div className="pt-[10px]">
-                  <div className="relative mb-6 border border-[#e8e8e8] last:border last:border-[#e8e8e8] bg-white rounded-lg text-[#4a4a4a] max-w-full">
-                    {/* WIDGET ITEMS  */}
-                    <div className="flex justify-between items-center py-[10px] px-4">
-                      <div>
-                        <span className="text-sm font-medium text-[#393a4f] block">
-                          Account Type
-                        </span>
-                        <span className="text-[0.9rem] text-[#999] font-normal block">
-                          Public
-                        </span>
-                      </div>
-                      <MdAccountCircle className="text-xl text-[#cecece] mx-1" />
-                    </div>
-                    <div className="flex justify-between items-center py-[10px] px-4">
-                      <div>
-                        <span className="text-sm font-medium text-[#393a4f] block">
-                          Email
-                        </span>
-                        <span className="text-[0.9rem] text-[#999] font-normal block">
-                          {user?.email}
-                        </span>
-                      </div>
-                      <MdEmail className="text-xl text-[#cecece] mx-1" />
-                    </div>
-                    <div className="flex justify-between items-center py-[10px] px-4">
-                      <div>
-                        <span className="text-sm font-medium text-[#393a4f] block">
-                          Lives In
-                        </span>
-                        <span className="text-[0.9rem] text-[#999] font-normal block">
-                          Jharkhand , Ramgarh
-                        </span>
-                      </div>
-                      <MdLocationPin className="text-xl text-[#cecece] mx-1" />
-                    </div>
-                    <div className="flex justify-between items-center py-[10px] px-4">
-                      <div>
-                        <span className="text-sm font-medium text-[#393a4f] block">
-                          Followers
-                        </span>
-                        <span className="text-[0.9rem] text-[#999] font-normal block">
-                          300 Followers
-                        </span>
-                      </div>
-                      <MdNotificationsActive className="text-xl text-[#cecece] mx-1" />
-                    </div>
-                  </div>
-                </div>
-              </div>
+              {/* BASIC INFO WIDGET ->  */}
+              <BasicInfoWidget user={{
+                email:user?.email || '',
+                Bio: user?.Bio || '',
+                location : user?.location || '',
+              }} follower={user?.followers?.length || 0} />
+                
               <div className="block p-3 w-full md:w-[66.66666674%] basis-0 grow shrink md:flex-none ">
                 {/* WIDGET HEADING  */}
                 <div className="w-full p-2 rounded-sm border border-[#e8e8e8] bg-white flex justify-center items-center">

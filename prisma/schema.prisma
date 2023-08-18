@@ -41,6 +41,8 @@ model User {
   username            String?       @unique
   image               String?
   onboardingCompleted Boolean?      @default(false)
+  location            String?
+  Bio                 String?
   accounts            Account[]
   sessions            Session[]
   Post                Post[]
@@ -104,7 +106,6 @@ model Follows {
   following   User   @relation("following", fields: [followingId], references: [id])
   followingId String @db.ObjectId
 
-  // @@id([followerId, followingId])
 }
 
 // COMMANDS PRISMA 

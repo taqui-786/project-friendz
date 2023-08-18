@@ -6,18 +6,17 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import EditorJS from "@editorjs/editorjs";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
-import { useRouter } from "next/navigation";
 import { handleImageUpload } from "@/lib/Functions";
 import { PostCreationRequest, postValidator } from "./CreatePostValidator";
 import { Loader2 } from "lucide-react";
 import { exitPopup } from "./button/CreatePostExitPost";
+import { useRouter } from "next/navigation";
 
 interface editorProp {
-  userId: string;
+  userId: any;
 }
 
 const Editor: FC<editorProp> = ({ userId }) => {
-  const router = useRouter();
 
   const {
     register,
@@ -31,7 +30,7 @@ const Editor: FC<editorProp> = ({ userId }) => {
       content: null,
     },
   });
-
+  const router = useRouter()
   const ref = useRef<EditorJS>();
   const [isMounted, setIsMounted] = useState<boolean>(false);
   const _titleRef = useRef<HTMLTextAreaElement>(null);
@@ -39,6 +38,7 @@ const Editor: FC<editorProp> = ({ userId }) => {
     if (typeof window !== "undefined") {
       setIsMounted(true);
     }
+
   }, []);
 
   //   EDITOR INITALISATION FUNCTION --- >
@@ -166,7 +166,7 @@ const Editor: FC<editorProp> = ({ userId }) => {
     <div className="w-full p-4 bg-zinc-50 rounded-lg border border-zinc-200 ">
       {/* On SUBMIT LOADING  */}
       {isLoading && (
-        <div className="absolute h-fit w-fit m-auto top-0 bottom-0 left-0 right-0 z-50 flex justify-center items-center bg-zinc-50">
+        <div className="absolute h-fit w-fit m-auto top-0 bottom-0 left-0 right-0 z-[+9999] flex justify-center items-center bg-zinc-50">
           <Loader2 className="h-14 w-14 text-[#3d70b2] animate-spin" />
         </div>
       )} 

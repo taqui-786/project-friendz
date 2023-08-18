@@ -21,7 +21,7 @@
     "@editorjs/list": "^1.8.0",
     "@editorjs/table": "^2.2.2",
     "@hookform/resolvers": "^3.2.0",
-    "@mantine/hooks": "^6.0.18",
+    "@mantine/hooks": "^6.0.19",
     "@prisma/client": "^5.1.1",
     "@radix-ui/react-dialog": "^1.0.4",
     "@radix-ui/react-label": "^2.0.2",
@@ -41,8 +41,8 @@
     "eslint-config-next": "^13.4.16",
     "firebase": "^10.1.0",
     "lucide-react": "^0.263.1",
-    "next": "^13.4.16",
-    "next-auth": "^4.22.3",
+    "next": "^13.4.18",
+    "next-auth": "^4.23.1",
     "postcss": "8.4.27",
     "prisma": "^5.1.1",
     "react": "^18.2.0",
@@ -54,7 +54,8 @@
     "tailwind-merge": "^1.14.0",
     "tailwindcss": "3.3.3",
     "tailwindcss-animate": "^1.0.6",
+    "timeago.js": "^4.0.2",
     "typescript": "5.1.6",
-    "zod": "^3.21.4"
+    "zod": "^3.22.1"
   }
 }

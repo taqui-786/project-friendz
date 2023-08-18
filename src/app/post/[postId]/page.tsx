@@ -15,6 +15,7 @@ import { notFound } from "next/navigation";
 import React, { Suspense } from "react";
 import { AiOutlineHeart } from "react-icons/ai";
 import { BiComment } from "react-icons/bi";
+import { format } from 'timeago.js'
 interface postpagerpops {
   params: {
     postId: string;
@@ -120,7 +121,7 @@ const page = async ({ params }: postpagerpops) => {
                 {cachedUser ? cachedUser?.name : post?.author.name}
               </span>
               <span className="block text-[.78rem] text-left text-[#999]">
-                <small>2 hours ago</small>
+                <small>{format(cachedPost?.createdAt ?? post?.createdAt)}</small>
               </span>
             </div>
             {/* FOLLOW BUTTON  */}
@@ -192,7 +193,7 @@ export default page;
 function MyLoader() {
   return (
     <>
-      <Loader2 className="h-2 w-2 p-3 text-[blue] animate-spin" />
+      <Loader2 className="h-3 w-3 p-4 m-auto text-[blue] animate-spin" />
     </>
   );
 }

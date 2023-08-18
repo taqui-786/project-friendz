@@ -4,16 +4,16 @@ import { FC, useState } from "react"
 import { Textarea } from "./ui/textarea"
 import { Button } from "./ui/button"
 import { useMutation } from "@tanstack/react-query"
-import { useRouter } from "next/navigation"
 import axios, { AxiosError } from "axios"
 import { CommentRequest } from "@/lib/commentValidator"
+import { useRouter } from "next/navigation"
 interface CreateCommentProps {
     postId: string
     replyToId?: string
   }
 const CommentInput: FC<CreateCommentProps> = ({ postId, replyToId }) =>{
+  const router = useRouter()
     const [input, setInput] = useState<string>('')
-    const router = useRouter()
     const { mutate: comment, isLoading } = useMutation({
         mutationFn: async ({ postId, text, replyToId }: CommentRequest) => {
           const payload: CommentRequest = { postId, text, replyToId }

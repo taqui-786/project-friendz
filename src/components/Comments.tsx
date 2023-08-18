@@ -10,7 +10,7 @@ import axios, { AxiosError } from "axios";
 import { CommentRequest } from "@/lib/commentValidator";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-
+import { format } from 'timeago.js'
 type ExtendedComment = Comment & {
   like: CommentVote[];
   author: User;
@@ -90,7 +90,7 @@ const { mutate: replyComment, isLoading } = useMutation({
         <div className="text-sm font-bold ">{comment.author.name}</div>
         <p className="text-xs text-[#999]"  >{comment.text} </p>
         <div className="flex items-center pt-1">
-          <span className="px-3 text-[#999] block text-xs">28 min ago</span>
+          <span className="px-3 text-[#999] block text-xs">{format(comment.createdAt)}</span>
           <CommmentLike
             commentId={comment.id}
             votesAmt={votesAmt}

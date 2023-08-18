@@ -1,7 +1,12 @@
 import CreatePostOuterBox from "@/components/CreatePostOuterBox"
 import FeedPage from "@/components/feed/FeedPage"
 
-export default  function Home() {
+
+export default  async function Home() {
+// const session = await getAuthSession()  
+// if(session?.user.onboardingCompleted === fa ){ 
+//   return redirect('/newuser')
+// } 
   
 
   return (

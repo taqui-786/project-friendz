@@ -19,7 +19,6 @@ const FollowButton: FC<FollowButtonprops> = ({
   toFollow,
   isFollowed,
 }) => {
-  const [followed, setFollowed] = useState(isFollowed);
   const [isFollow, setIsFollow] = useState<boolean>(false);
 
   useEffect(() => {
@@ -62,6 +61,7 @@ const FollowButton: FC<FollowButtonprops> = ({
       className={`ml-auto py-[14px] px-[18px] `}
       variant="outline"
       isLoading={isLoading}
+      disabled={myId === toFollow}
     >
       {!isLoading && <AiOutlinePlus className="h-3 w-3 mr-2" />}
       {/* {followed} */}

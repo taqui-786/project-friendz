@@ -9,9 +9,9 @@ export const HandleNext = (index: number) => {
   const steps = ["stepOne", "stepTwo", "stepThree", "stepFour", "stepFive"];
   const title = [
     "Welcome, select an account type.",
+    "Let's create a unique username",
     "Tell us more about you.",
-    "Secure your account.",
-    "Upload a profile picture.",
+    "Change a profile picture. Or go Next ",
     "You're all set. Ready?",
   ];
   const value = [0, 25, 50, 75, 100];
@@ -36,7 +36,7 @@ export const HandleNext = (index: number) => {
     document.getElementById(`${ids[i]}`)?.classList.remove("activeDot");
   }
 };
-// *********************** HANDLE Image Upload in firebase *************************
+// *********************** HANDLE Image Upload For Editor.js in firebase *************************
 
 export async function handleImageUpload (file:File) {
 

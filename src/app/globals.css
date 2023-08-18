@@ -116,7 +116,37 @@ body {
   left: 42px;
   margin-left: -8px;
 }
-
+/* CUSTOM STYLES FOR NEWUSER PAGE ->> */
+.w-calc-100-min-24{
+  width: calc(100% - 24px);
+}
+.h-calc-100-min-113{
+  min-height: calc(100vh - 133px);
+}
+.custom_transition_width{
+  transition: width 0.4s;
+}
+.activeDot{
+  color: #039be5;
+  border-color: #039be5;
+}
+.firstDot {
+left: -19px;
+color: #039be5;
+  border-color: #039be5;
+}
+.secondDot {
+left: calc(25% - 19px);
+}
+.thirdDot {
+left: calc(50% - 19px);
+}
+.fourthDot {
+left: calc(75% - 19px);
+}
+.fifthDot {
+right: -19px;
+}
 /* HIDING SLIDE BAR CLASS AND MAKING HOME WIDTH FULL-->  */
 .slidebar_hide{
   transform: translate(-100%);

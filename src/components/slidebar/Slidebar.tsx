@@ -1,4 +1,4 @@
-import { FiLogOut, FiSearch, FiUser, FiUsers } from 'react-icons/fi'
+import { FiUser, FiUsers } from 'react-icons/fi'
 import React from 'react'
 import {  AiOutlineHome, AiOutlineSetting } from 'react-icons/ai'
 import { CgProfile } from 'react-icons/cg'
@@ -7,10 +7,11 @@ import Image from 'next/image'
 import Link from 'next/link'
 import  { SlideBarInnerButton } from '../button/SlideBarResponsiveExitButton'
 import SearchUserInput from '../SearchUserInput'
-import { signOut } from 'next-auth/react'
 import LogOutButton from '../button/LogOutButton'
+import SlidebarLink from './SlidebarLink'
 async function Slidebar() {
     const session = await getAuthSession()
+    
     return (
        <div id='slidebar' className='absolute top-0 left-0 h-full w-[280px] bg-white border-r  border-r-borderE3 shadow-md z-30 transition-transform myslidebar'>
             {/* top section -->  */}
@@ -32,30 +33,7 @@ async function Slidebar() {
             {/* Bottom section -->  */}
             <div className='h-[60%] w-full relative pt-8 pb-12'>
                 <ul className='mb-12 list-none'>
-                    <li className=' hover:bg-[#f2f2f2]'>
-                        <Link href="/" className='slide_link_active flex text-[#393a4f] items-center py-3 px-8 border-l-[5px] border-l-transparent' >
-                            <AiOutlineHome className="h-5 w-5 mr-4 text-[#a2a5b9]" />
-                            <span className=' text-base'>Home</span>
-                        </Link>
-                    </li>
-                    <li className=' hover:bg-[#f2f2f2]'>
-                        <Link href="/" className='flex text-[#393a4f] items-center py-3 px-8 border-l-[5px] border-l-transparent' >
-                            <FiUser className="h-5 w-5 mr-4 text-[#a2a5b9]" />
-                            <span className=' text-base'>Friends</span>
-                        </Link>
-                    </li>
-                    <li className=' hover:bg-[#f2f2f2]'>
-                        <Link href="/" className='flex text-[#393a4f] items-center py-3 px-8 border-l-[5px] border-l-transparent' >
-                            <FiUsers className="h-5 w-5 mr-4 text-[#a2a5b9]" />
-                            <span className=' text-base'>Groups</span>
-                        </Link>
-                    </li>
-                    <li className=' hover:bg-[#f2f2f2]'>
-                        <Link href={`/profile/${session?.user.id}`} className='flex text-[#393a4f] items-center py-3 px-8 border-l-[5px] border-l-transparent' >
-                            <CgProfile className="h-5 w-5 mr-4 text-[#a2a5b9]" />
-                            <span className=' text-base'>Profile</span>
-                        </Link>
-                    </li>
+                   <SlidebarLink session={session} />
                 </ul>
                 {/* SETTING AND LOGOUT  */}
                 <ul className='list-none'>

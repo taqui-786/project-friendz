@@ -3,12 +3,12 @@ import { initializeApp } from 'firebase/app';
 import { getStorage } from 'firebase/storage';
 const firebaseConfig = {
     apiKey: process.env.APIKEY,
-    authDomain:process.env.AUTHDOMAIN,
-    projectId: process.env.PROJECTID,
-    storageBucket: process.env.STORAGEBUCKET,
-    messagingSenderId: process.env.MESSAGINGSENDERID,
-    appId: process.env.APPID,
-    measurementId: process.env.MEASUREMENTID
+    authDomain:"projectfriendz-45b49.firebaseapp.com",
+    projectId: "projectfriendz-45b49",
+    storageBucket: "projectfriendz-45b49.appspot.com",
+    messagingSenderId: "186662584426",
+    appId: "1:186662584426:web:b37a6002f57c2af7578a13",
+    measurementId:"G-ZCMDL02FYD"
     };
     const app = initializeApp(firebaseConfig);
     const storage = getStorage(app);

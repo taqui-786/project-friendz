@@ -12,6 +12,7 @@ export const authOptions: NextAuthOptions = {
   },
   pages: {
     signIn: "/signin",
+    newUser:'/newuser'
   },
   providers: [
     GoogleProvider({
@@ -67,6 +68,8 @@ export const authOptions: NextAuthOptions = {
         picture: dbUser.image,
         username: dbUser.username,
         onboardingCompleted: dbUser.onboardingCompleted,
+        location: dbUser.location,
+        Bio: dbUser.Bio,
       };
     },
     redirect() {

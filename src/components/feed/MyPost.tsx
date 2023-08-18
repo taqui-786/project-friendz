@@ -6,6 +6,7 @@ import { BiSolidComment } from "react-icons/bi";
 import PostLikeBtn from "../button/PostLikeBtn";
 import { Post, User } from "@prisma/client";
 import CommentButton from "../button/CommentButton";
+import { format } from 'timeago.js'
 interface mypostProps {
   post: Post & {
     author: User;
@@ -40,9 +41,9 @@ const MyPost: FC<mypostProps> = ({ post, isPostLiked ,commentLength}) => {
                   href={`/profile/${post.authorId}`}
                   className="text-[0.9rem] text-[#393a4f] font-medium"
                 >
-                  {post.author.name}
+                  {post.author.username}
                 </Link>
-                <span className="text-[#999] text-[0.8rem]">4 Hours ago</span>
+                <span className="text-[#999] text-[0.8rem]">{format(post.createdAt)}</span>
               </div>
             </div>
             <div className="ml-auto inline-flex relative align-top">
@@ -67,7 +68,7 @@ const MyPost: FC<mypostProps> = ({ post, isPostLiked ,commentLength}) => {
           <div className="flex justify-center items-center p-4 m-0 ">
             <div className="ml-3 ">
               <div>
-                <Link
+                {/* <Link
                   className="text-[.8rem] text-[#393a4f] font-medium"
                   href={"/"}
                 >
@@ -78,10 +79,10 @@ const MyPost: FC<mypostProps> = ({ post, isPostLiked ,commentLength}) => {
                   className="text-[.8rem] text-[#393a4f] font-medium"
                   href={"/"}
                 >
-                  David
-                </Link>
+                  
+                </Link> */}
                 <p className="text-[.7rem] text-[#888da8]">
-                  and 23 more liked the post
+                  FRIENDZ
                 </p>
               </div>
             </div>
