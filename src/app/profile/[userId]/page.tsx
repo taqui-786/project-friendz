@@ -86,7 +86,7 @@ const Profile = async ({ params }: profilepageprops) => {
                         width={112}
                         loading="eager"
                         priority
-                        className="relative object-cover rounded-full z-10 "
+                        className="relative object-cover rounded-full z-10 w-full min-w-[112px] h-auto max-h-[7rem] "
                       />
                     )}
                     {session?.user.id === user?.id && (
@@ -101,9 +101,8 @@ const Profile = async ({ params }: profilepageprops) => {
                 </div>
                 {/* PROFILE FOLLOW BUTTON  */}
                 <div className="flex justify-between items-center pt-2">
-                  <div className=""></div>
                   <div className="flex justify-between items-start py-[10px] w-[99%]">
-                    <div className="w-1/4 flex justify-between">
+                    <div className="w-1/4 flex justify-between max-[620px]:flex-col max-[620px]:items-center ">
                       <div className="h-fit w-fit flex flex-col items-center">
                         <span className="text-[1.6rem] font-mono font-bold text-[#393a4f] block">
                           {user?.followers.length}
@@ -138,10 +137,10 @@ const Profile = async ({ params }: profilepageprops) => {
                         {user?.name}
                       </span>
                     </div>
-                    <div className="text-right w-1/4 ">
+                    <div className="text-right  w-1/4 max-[620px]:mr-4">
                       {(session?.user.id !== user?.id) && 
                         <FollowButton
-                          myId={params.userId}
+                          myId={session?.user.id}
                           toFollow={user?.id}
                           isFollowed={isUserFollowed}
                         />

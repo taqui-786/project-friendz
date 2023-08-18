@@ -32,7 +32,7 @@ const MyPost: FC<mypostProps> = ({ post, isPostLiked ,commentLength}) => {
                     width={42}
                     loading="eager"
                     priority
-                    className="block rounded-full"
+                    className="block rounded-full w-full h-auto min-w-[42px] max-h-[42px]"
                   />
                 )}
               </div>

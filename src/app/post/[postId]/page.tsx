@@ -103,7 +103,7 @@ const page = async ({ params }: postpagerpops) => {
                 height={42}
                 width={42}
                 loading="eager"
-                className="rounded-full"
+                className="rounded-full w-full min-w-[42px] h-auto max-h-[42px]"
               />
             )}
             {cachedUser?.image && (
@@ -113,7 +113,7 @@ const page = async ({ params }: postpagerpops) => {
                 height={42}
                 width={42}
                 loading="eager"
-                className="rounded-full"
+                className="rounded-full w-auto h-auto max-h-[42px] "
               />
             )}
             <div className="px-[10px]">
