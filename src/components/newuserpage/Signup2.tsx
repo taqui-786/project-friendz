@@ -23,7 +23,7 @@ type FormData = z.infer<typeof UsernameValidator>;
 function Signup2() {
 
 const router = useRouter()
-const [btnDisable , setBtnDisable] = useState(false)
+const [btnDisable , setBtnDisable] = useState(true)
   const form = useForm<FormData>({
     resolver: zodResolver(UsernameValidator),
     defaultValues: {

@@ -9,11 +9,11 @@ import { NewUserNextStepBtn } from '../button/NewUserButton'
 type NewUserImagetype = {
     Myimage: string
 }
- const NewUserImageUpload = async ({Myimage}:NewUserImagetype) =>{
+ const NewUserImageUpload =  ({Myimage}:NewUserImagetype) =>{
    const [img,setImg] = useState<any>(Myimage)
    const [loading ,setLoading] = useState<boolean>(false)
   //  FUNCTION IMAGE UPLOAD 
-   const onImageChange = async (e:React.ChangeEvent<HTMLInputElement>) => {
+  const onImageChange = async (e:React.ChangeEvent<HTMLInputElement>) => {
     setLoading(true)
       try {
       const [file]:any = e.target.files;
@@ -32,12 +32,6 @@ type NewUserImagetype = {
       setLoading(false)
     }
     };
-  
-        
-       
-      
-
-
     return(
       <>
         <div className='text-center'>

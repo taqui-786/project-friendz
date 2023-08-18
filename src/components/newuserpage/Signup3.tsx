@@ -23,7 +23,7 @@ import { useRouter } from "next/navigation";
 type FormData = z.infer<typeof LocationAndBioValidator>;
 
 function Signup3() {
-  const [isDisabled, setIsDisabled] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(true);
   const router = useRouter();
   const form = useForm<FormData>({
     resolver: zodResolver(LocationAndBioValidator),
