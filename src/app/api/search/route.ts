@@ -11,14 +11,6 @@ try {
         where: {
             OR: [
               {
-                name: {
-                  contains: data as string, // Search for users with names containing the searchTerm
-                  mode: 'insensitive'
-                },
-                email: {
-                  contains: data as string, // Search for users with names containing the searchTerm
-                  mode: 'insensitive'
-                },
                 username: {
                   contains: data as string, // Search for users with names containing the searchTerm
                   mode: 'insensitive'

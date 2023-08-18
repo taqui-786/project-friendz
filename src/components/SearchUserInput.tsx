@@ -30,7 +30,7 @@ function SearchUserInput() {
         <div className="absolute p-2 h-full grid items-center focus-within:text-[#039be5] "><FiSearch className=' ' /></div>
 
         <input type="search" onChange={handleSearchDropdown} 
-        onBlur={() => setVisible(false)}
+        // onBlur={() => setVisible(false)}
         placeholder='Search' className=' pr-1 outline-none border border-colorF7 bg-colorF7 w-full h-[42px] rounded-md pl-7 focus:bg-white focus:border-[#3180e1]  ' />
 
         {visible && <SearchDropdown users={users} loading={loading} />}

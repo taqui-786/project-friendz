@@ -15,7 +15,7 @@ function CustomImageRenderer({ data }: any) {
       {caption.length >= 1 && (
         <div className="h-fit w-full flex items-center justify-center mt-1">
           <h2 className="text-sm block font-semibold ml-5 border border-borderE3 p-2 w-fit font-mono">
-            Photo Captions:{caption}
+            Captions: {caption}
           </h2>
         </div>
       )}
