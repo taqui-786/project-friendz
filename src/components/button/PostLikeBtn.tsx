@@ -10,12 +10,11 @@ import { Button } from '../ui/button'
 interface postlikebtnprops{
 postData: any
 isLiked?: any
+initialLikeAmt:any
 }
 
-const PostLikeBtn:FC<postlikebtnprops> = ({postData,isLiked}) => {
-    const initialLikeAmt = postData?.like?.length 
+const PostLikeBtn:FC<postlikebtnprops> = ({postData,isLiked,initialLikeAmt}) => {
     const postId = postData?.id
-    // console.log(initialLikeAmt);
     
     const prevLike = usePrevious(initialLikeAmt)
     const [votesAmt, setVotesAmt] = useState<number>(initialLikeAmt)
@@ -29,7 +28,9 @@ if(!isLiked){
 }
 },[isLiked])
 
-
+useEffect(()=>{
+    setVotesAmt(initialLikeAmt)
+},[initialLikeAmt])
 
 const {mutate: like , isLoading} = useMutation({
     

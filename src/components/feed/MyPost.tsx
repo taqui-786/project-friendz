@@ -14,8 +14,9 @@ interface mypostProps {
   };
   commentLength?:number
   isPostLiked?: any;
+  LikeAmt:number
 }
-const MyPost: FC<mypostProps> = ({ post, isPostLiked ,commentLength}) => {
+const MyPost: FC<mypostProps> = ({ post, isPostLiked ,commentLength,LikeAmt}) => {
   return (
     <>
       <div className="relative mb-6  border border-[#e8e8e8] bg-white rounded-[.85rem] text-[#4a4a4a] max-w-full max-h-fit ">
@@ -88,7 +89,7 @@ const MyPost: FC<mypostProps> = ({ post, isPostLiked ,commentLength}) => {
             </div>
             <div className="ml-auto relative flex items-stretch">
               {/* Like count  */}
-              <PostLikeBtn postData={post} isLiked={isPostLiked} />
+              <PostLikeBtn postData={post} isLiked={isPostLiked} initialLikeAmt={LikeAmt} />
               <CommentButton postId={post.id} />
               {/* comment count  */}
               <div className="flex justify-start text-[#888da8] items-center mx-1">

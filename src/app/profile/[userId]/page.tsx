@@ -3,12 +3,7 @@ import Image from "next/image";
 import banner from "../../../../public/cover_bg.png";
 import { db } from "@/lib/Prisma.db";
 import { AiOutlinePlus } from "react-icons/ai";
-import {
-  MdAccountCircle,
-  MdEmail,
-  MdLocationPin,
-  MdNotificationsActive,
-} from "react-icons/md";
+
 import { getAuthSession } from "@/lib/auth";
 import FollowButton from "@/components/button/FollowButton";
 import ProfilePostsColumn from "@/components/feed/ProfilePostsColumn";
@@ -92,7 +87,6 @@ const Profile = async ({ params }: profilepageprops) => {
                     {session?.user.id === user?.id && (
                       <div className="absolute bottom-0 right-0 h-9 w-9 rounded-full flex justify-center items-center bg-[#3d70b2] shadow-md cursor-pointer z-20">
                         <DialogTrigger asChild>
-                        {/* <Button variant="outline">Edit Profile</Button> */}
                           <AiOutlinePlus className="h-5 w-5 text-white" />
                         </DialogTrigger>
                       </div>

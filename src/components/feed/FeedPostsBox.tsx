@@ -5,6 +5,7 @@ import FeedColumn from './FeedColumn'
 import { db } from '@/lib/Prisma.db'
 import { INFINITE_SCROLL_PAGINATION_RESULTS } from '@/config'
 import { notFound } from 'next/navigation'
+import SuggestUsers from './SuggestUsers'
 
 async function FeedPostsBox() {
     const session = await getAuthSession()
@@ -33,7 +34,9 @@ if (!myPost) return notFound()
                 {myPost && <FeedColumn initialPosts={myPost} />}
             </div>
             {/* RIGHT COLUMN  --> */}
-            <div className="none basis-0 grow shrink p-3 md:block md:flex-none md:w-[33.33333337%] "></div>
+            <div className="none basis-0 grow shrink p-3 md:block md:flex-none md:w-[33.33333337%] ">
+              <SuggestUsers/>
+            </div>
         </div>
     </div>
   )

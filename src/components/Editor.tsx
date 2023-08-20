@@ -166,7 +166,7 @@ const Editor: FC<editorProp> = ({ userId }) => {
     <div className="w-full p-4 bg-zinc-50 rounded-lg border border-zinc-200 ">
       {/* On SUBMIT LOADING  */}
       {isLoading && (
-        <div className="absolute h-fit w-fit m-auto top-0 bottom-0 left-0 right-0 z-[+9999] flex justify-center items-center bg-zinc-50">
+        <div className="absolute h-full w-full m-auto top-0 bottom-0 left-0 right-0 z-[+9999] flex justify-center items-center bg-zinc-50">
           <Loader2 className="h-14 w-14 text-[#3d70b2] animate-spin" />
         </div>
       )} 

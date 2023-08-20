@@ -63,6 +63,9 @@ const FeedColumn: FC<postfeedprops> = ({ initialPosts }) => {
             const isLiked = post?.like?.find(
               (vote) => vote.userId === session?.user.id
             )
+            // LIKES AMOUNT 
+            const LikeAmount = post?.like.length
+            // COMMENTS COUNT 
             const commentLength = post?.comments.length                
 
             if (index === posts.length - 1) {
@@ -76,6 +79,7 @@ const FeedColumn: FC<postfeedprops> = ({ initialPosts }) => {
                     key={index}
                     isPostLiked={isLiked}
                     commentLength={commentLength}
+                    LikeAmt={LikeAmount}
                   />
                 </li>
               )
@@ -85,6 +89,7 @@ const FeedColumn: FC<postfeedprops> = ({ initialPosts }) => {
                 key={index}
                 isPostLiked={isLiked}
                 commentLength={commentLength}
+                LikeAmt={LikeAmount}
               />
             }
           })

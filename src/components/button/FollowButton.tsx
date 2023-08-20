@@ -59,11 +59,11 @@ const FollowButton: FC<FollowButtonprops> = ({
     <Button
       onClick={() => follow()}
       className={`ml-auto py-[14px] px-[18px] `}
-      variant="outline"
+      variant="subtle"
       isLoading={isLoading}
       disabled={myId === toFollow}
     >
-      {!isLoading && <AiOutlinePlus className="h-3 w-3 mr-2" />}
+      {!isFollow ? ( !isLoading ? <AiOutlinePlus className="h-3 w-3 mr-2" /> : '') :''}
       {/* {followed} */}
       {isFollow ? "Following" : "Follow"}
     </Button>

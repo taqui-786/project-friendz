@@ -1,11 +1,16 @@
 "use client";
-
+import { FaClosedCaptioning } from "react-icons/fa";
 import Image from "next/image";
+import { Button } from "../ui/button";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 function CustomImageRenderer({ data }: any) {
   const src = data.file.url;
   const caption = data.caption;
-  // console.log(data);
 
   return (
     <>
@@ -13,11 +18,16 @@ function CustomImageRenderer({ data }: any) {
         <Image alt="image" className="object-contain" fill src={src} />
       </div>
       {caption.length >= 1 && (
-        <div className="h-fit w-full flex items-center justify-center mt-1">
-          <h2 className="text-sm block font-semibold ml-5 border border-borderE3 p-2 w-fit font-mono">
-            Captions: {caption}
-          </h2>
+        <div className="h-fit w-full flex items-center justify-start ml-2 mt-1">
+          <Popover>
+            <PopoverTrigger asChild>
+            <Button variant={'ghost'} size={'lg'} > <FaClosedCaptioning  className="text-2xl text-[#3d70b2]" /> </Button>
+
+            </PopoverTrigger>
+            <PopoverContent>{caption}</PopoverContent>
+          </Popover>
         </div>
+        
       )}
     </>
   );
