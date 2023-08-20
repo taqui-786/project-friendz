@@ -14,7 +14,7 @@ interface mypostProps {
   };
   commentLength?:number
   isPostLiked?: any;
-  LikeAmt:any
+  LikeAmt?:any
 }
 const MyPost: FC<mypostProps> = ({ post, isPostLiked ,commentLength,LikeAmt}) => {
   return (
