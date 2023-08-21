@@ -25,8 +25,8 @@ interface profilepageprops {
 }
 const Profile = async ({ params }: profilepageprops) => {
   const session = await getAuthSession();
-  let user;
-  user = await db.user.findUnique({
+  
+ let user = await db.user.findUnique({
     where: {
       id: params.userId,
     },
@@ -37,6 +37,7 @@ const Profile = async ({ params }: profilepageprops) => {
         include: {
           like: true,
           author: true,
+          comments:true
         },
         // take: 2
       },
@@ -165,7 +166,7 @@ const Profile = async ({ params }: profilepageprops) => {
                       <Loader2 className="h-5 w-5 animate-spin text-blue-700" />
                     }
                   >
-                    <ProfilePostsColumn profilePosts={user?.Post} />
+                    <ProfilePostsColumn profilePosts={user?.Post}  />
                   </Suspense>
                 </div>
               </div>

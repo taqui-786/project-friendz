@@ -83,13 +83,13 @@ const MyPost: FC<mypostProps> = ({ post, isPostLiked ,commentLength,LikeAmt}) =>
                   
                 </Link> */}
                 <p className="text-[.7rem] text-[#888da8]">
-                  FRIENDZ
+                  © FRIENDZ
                 </p>
               </div>
             </div>
             <div className="ml-auto relative flex items-stretch">
               {/* Like count  */}
-              <PostLikeBtn postData={post} isLiked={isPostLiked} initialLikeAmt={LikeAmt} />
+              <PostLikeBtn postData={post} isLiked={isPostLiked} initialLikeAmt={LikeAmt}  />
               <CommentButton postId={post.id} />
               {/* comment count  */}
               <div className="flex justify-start text-[#888da8] items-center mx-1">

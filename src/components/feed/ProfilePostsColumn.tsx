@@ -18,13 +18,16 @@ const session = await getAuthSession()
                 const isLiked = posts?.like?.find(
                     (vote:any) => vote.userId === session?.user.id
                   )
-                    
+                    const LikeAmt = posts?.like.length
+                    const CommentAmt = posts?.comments.length
                 return(
                     
                     <MyPost
                     post={posts}
                     key={index}
                     isPostLiked={isLiked}
+                    LikeAmt={LikeAmt}
+                    commentLength={CommentAmt}
 
                   />
                   
