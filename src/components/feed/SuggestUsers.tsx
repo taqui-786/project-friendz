@@ -6,14 +6,27 @@ const SuggestUsers = async () => {
   const session = await getAuthSession();
   const randomIndex = Math.floor(Math.random() * 5);
   const users = await db.user.findMany({
-    skip: randomIndex,
+    // skip: randomIndex,
+    where:{
+      id:{
+        not:session?.user.id
+      },
+      NOT:{
+         followers:{
+          some:{
+            followerId:session?.user.id
+          }
+        }
+      }
+    },
     include: {
       followers: true,
     },
+   
 
-    take: 5,
   });
-
+  const randomUsers = users.sort(() => 0.5 - Math.random()).slice(0, 5);
+  
   return (
     <>
       <div className="relative mb-6 border border-[#e8e8e8] bg-white rounded-lg text-[#4a4a4a] max-w-full">
@@ -24,9 +37,7 @@ const SuggestUsers = async () => {
         </div>
         <div className="">
           {/* USERS  */}
-          {users
-            .filter((not) => not.id !== session?.user.id)
-            .map((val) => {
+          {randomUsers.map((val) => {
             const isFollowed = val.followers.find((is) => is.followerId === session?.user.id)
 
              if(!isFollowed){

@@ -81,7 +81,7 @@ const Profile = async ({ params }: profilepageprops) => {
                         width={112}
                         loading="eager"
                         priority
-                        className="relative object-cover rounded-full z-10 w-full min-w-[112px] h-auto max-h-[7rem] "
+                        className="relative object-cover rounded-full z-10 w-[112px] h-[112px] max-h-[7rem] "
                       />
                     )}
                     {session?.user.id === user?.id && (

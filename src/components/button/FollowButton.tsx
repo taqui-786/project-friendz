@@ -5,8 +5,7 @@ import { AiOutlinePlus } from "react-icons/ai";
 import axios, { AxiosError } from "axios";
 import { FollowUserRequest } from "@/types/PostLikeValidator";
 import { useMutation } from "@tanstack/react-query";
-import { ExtendedPost } from "@/types/db";
-import { User } from "@prisma/client";
+
 
 interface FollowButtonprops {
   myId?: string;

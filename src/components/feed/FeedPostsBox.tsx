@@ -20,8 +20,6 @@ async function FeedPostsBox() {
       },
       take: INFINITE_SCROLL_PAGINATION_RESULTS,
   })
-// console.log(myPost);
-
 
 if (!myPost) return notFound()
   return (
@@ -34,7 +32,7 @@ if (!myPost) return notFound()
                 {myPost && <FeedColumn initialPosts={myPost} />}
             </div>
             {/* RIGHT COLUMN  --> */}
-            <div className="none basis-0 grow shrink p-3 md:block md:flex-none md:w-[33.33333337%] ">
+            <div className="hidden basis-0 grow shrink p-3 md:block md:flex-none md:w-[33.33333337%] ">
               <SuggestUsers/>
             </div>
         </div>

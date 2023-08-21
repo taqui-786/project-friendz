@@ -21,7 +21,7 @@ async function Slidebar() {
                 {/* USER BLOCK  */}
                 {session?.user &&
                     <div>
-                        <Image src={session.user?.image || ''} alt="user" height={70} width={70} loading='eager' priority className='block max-w-full mb-4 rounded-full' />
+                        <Image src={session.user?.image || ''} alt="user" height={70} width={70} loading='eager' priority className='block h-[70px] w-[70px] max-w-full mb-4 rounded-full' />
                         <div className="">
                             <span className='block font-bold text-xl text-[#393a4f] font-sans '>{session.user.name}</span>
                             <span className=' block text-sm text-[#a2a5b9] font-serif '>Public</span>

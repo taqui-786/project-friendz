@@ -24,7 +24,7 @@ const MyPost: FC<mypostProps> = ({ post, isPostLiked ,commentLength,LikeAmt}) =>
           {/* HEAD  */}
           <div className="flex justify-start items-center pt-4 px-4 pb-0">
             <div className="flex justify-start items-center">
-              <div className="relative block">
+              <div className="relative block rounded-full bg-gray-500">
                 {post?.author.image && (
                   <Image
                     src={post.author.image}
@@ -33,7 +33,7 @@ const MyPost: FC<mypostProps> = ({ post, isPostLiked ,commentLength,LikeAmt}) =>
                     width={42}
                     loading="eager"
                     priority
-                    className="block rounded-full w-full h-auto min-w-[42px] max-h-[42px]"
+                    className="block rounded-full w-[42px] h-[42px] max-h-[42px]"
                   />
                 )}
               </div>
