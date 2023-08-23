@@ -9,13 +9,9 @@ import FollowButton from "@/components/button/FollowButton";
 import ProfilePostsColumn from "@/components/feed/ProfilePostsColumn";
 import { Suspense } from "react";
 import { Loader2 } from "lucide-react";
-import {
-  Dialog,
 
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import EditProfile from "@/components/EditProfile";
 import BasicInfoWidget from "@/components/BasicInfoWidget";
+import Link from "next/link";
 
 
 interface profilepageprops {
@@ -51,7 +47,7 @@ const Profile = async ({ params }: profilepageprops) => {
   }
 
   return (
-    <Dialog>
+    <>
       <div
         id="homePage"
         className="relative ml-[280px] pt-6 py-[60px] px-[12px] home_width "
@@ -87,9 +83,9 @@ const Profile = async ({ params }: profilepageprops) => {
                     )}
                     {session?.user.id === user?.id && (
                       <div className="absolute bottom-0 right-0 h-9 w-9 rounded-full flex justify-center items-center bg-[#3d70b2] shadow-md cursor-pointer z-20">
-                        <DialogTrigger asChild>
+                        <Link href='/settings' className="h-fit w-fit decoration-transparent" >
                           <AiOutlinePlus className="h-5 w-5 text-white" />
-                        </DialogTrigger>
+                        </Link>
                       </div>
                     )}
                   </div>
@@ -174,8 +170,7 @@ const Profile = async ({ params }: profilepageprops) => {
           </div>
         </div>
       </div>
-    <EditProfile/>
-    </Dialog>
+    </>
   );
 };
 
