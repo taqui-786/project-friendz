@@ -81,7 +81,7 @@ const { mutate: replyComment, isLoading } = useMutation({
               width={32}
               loading="eager"
               priority
-              className="block h-auto w-full rounded-full"
+              className="block h-8 w-8 rounded-full"
               />
               )}
         </p>

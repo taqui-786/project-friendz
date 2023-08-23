@@ -5,6 +5,7 @@ import { AiOutlinePlus } from "react-icons/ai";
 import axios, { AxiosError } from "axios";
 import { FollowUserRequest } from "@/types/PostLikeValidator";
 import { useMutation } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 
 
 interface FollowButtonprops {
@@ -39,11 +40,11 @@ const FollowButton: FC<FollowButtonprops> = ({
       setIsFollow(false);
       if (err instanceof AxiosError) {
         if (err.response?.status === 401) {
-          return console.log("login first");
+          return toast.error(" Login First. ");
         }
       }
 
-      return window.alert(" like error ");
+      return toast.error(" Unable to Follow ");
     },
     onMutate: () => {
       if (isFollow) {

@@ -19,6 +19,7 @@ import { z } from "zod";
 import { useMutation } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 type FormData = z.infer<typeof LocationAndBioValidator>;
 
@@ -44,23 +45,17 @@ function Signup3() {
     onError: (err) => {
       if (err instanceof AxiosError) {
         if (err.response?.status === 409) {
-          // return toast({
-          //   title: 'Username already taken.',
-          //   description: 'Please choose another username.',
-          //   variant: 'destructive',
-          // })
-        }
+        return toast.error(' Please enter properly')
+      }
       }
 
-      // return toast({
-      //   title: 'Something went wrong.',
-      //   description: 'Your username was not updated. Please try again.',
-      //   variant: 'destructive',
-      // })
+      return toast.error('Something went wrong.')
+      
     },
     onSuccess: () => {
       setIsDisabled(false);
       router.refresh();
+      toast.success('Location and Bio Added.')
     },
   });
 

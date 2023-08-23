@@ -6,6 +6,7 @@ import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai'
 import {PostVoteRequest} from '@/types/PostLikeValidator'
 import axios, { AxiosError } from 'axios'
 import { Button } from '../ui/button'
+import toast from 'react-hot-toast'
 
 interface postlikebtnprops{
 postData: any
@@ -45,12 +46,12 @@ const {mutate: like , isLoading} = useMutation({
         setVotesAmt(prevLike)
         if (err instanceof AxiosError) {
             if (err.response?.status === 401) {
-                return console.log('login first');
+                return toast.error(" Login First. ");
 
             }
         }
 
-        return window.alert(' like error ')
+        return toast.error(" Unable to Like ");
     },
     onMutate: () =>{
         if( !liked){

@@ -1,7 +1,6 @@
 import { FiUser, FiUsers } from 'react-icons/fi'
 import React from 'react'
-import {  AiOutlineHome, AiOutlineSetting } from 'react-icons/ai'
-import { CgProfile } from 'react-icons/cg'
+import {   AiOutlineSetting } from 'react-icons/ai'
 import { getAuthSession } from '@/lib/auth'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -9,6 +8,7 @@ import  { SlideBarInnerButton } from '../button/SlideBarResponsiveExitButton'
 import SearchUserInput from '../SearchUserInput'
 import LogOutButton from '../button/LogOutButton'
 import SlidebarLink from './SlidebarLink'
+import SettingBtn from '../button/SettingBtn'
 async function Slidebar() {
     const session = await getAuthSession()
     
@@ -32,16 +32,13 @@ async function Slidebar() {
             </div>
             {/* Bottom section -->  */}
             <div className='h-[60%] w-full relative pt-8 pb-12'>
-                <ul className='mb-12 list-none'>
+                <ul className=' list-none'>
                    <SlidebarLink session={session} />
                 </ul>
                 {/* SETTING AND LOGOUT  */}
                 <ul className='list-none'>
                     <li className=' hover:bg-[#f2f2f2]'>
-                        <Link href="/" className='flex text-[#393a4f] items-center py-3 px-8 border-l-[5px] border-l-transparent' >
-                            <AiOutlineSetting className="h-5 w-5 mr-4 text-[#a2a5b9]" />
-                            <span className=' text-base'>Settings</span>
-                        </Link>
+                        <SettingBtn/>
                     </li>
                     <li className=' hover:bg-[#f2f2f2]'>
                         <LogOutButton/>

@@ -19,9 +19,9 @@ import { NewUserNextStepBtn } from "../button/NewUserButton";
 import { useMutation } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 type FormData = z.infer<typeof UsernameValidator>;
 function Signup2() {
-
 const router = useRouter()
 const [btnDisable , setBtnDisable] = useState(true)
   const form = useForm<FormData>({
@@ -42,23 +42,17 @@ const {mutate:updateUsername , isLoading} = useMutation({
   onError: (err) => {
     if (err instanceof AxiosError) {
       if (err.response?.status === 409) {
-        // return toast({
-        //   title: 'Username already taken.',
-        //   description: 'Please choose another username.',
-        //   variant: 'destructive',
-        // })
+        return toast.error('Username already taken.')
+        
       }
     }
 
-    // return toast({
-    //   title: 'Something went wrong.',
-    //   description: 'Your username was not updated. Please try again.',
-    //   variant: 'destructive',
-    // })
+    return toast.error('Something went wrong.')
   },
   onSuccess: () => {
     setBtnDisable(false)
     router.refresh()
+    toast.success('Username Changed.')
   },
 })
   return (

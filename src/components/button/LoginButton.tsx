@@ -3,6 +3,7 @@ import { FC, useState } from "react"
 import { Button } from "../ui/button"
 import {FcGoogle} from 'react-icons/fc'
 import { signIn } from 'next-auth/react'
+import toast from "react-hot-toast"
 
 const LoginButton: FC = () => {
 
@@ -18,6 +19,7 @@ const LoginButton: FC = () => {
     }finally{
       // LOADING OR ANY OTHER STUF 
       setLoading(false)
+       toast.success(" Login successfull. ");
     }
   }
 

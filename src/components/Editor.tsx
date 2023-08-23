@@ -11,6 +11,7 @@ import { PostCreationRequest, postValidator } from "./CreatePostValidator";
 import { Loader2 } from "lucide-react";
 import { exitPopup } from "./button/CreatePostExitPost";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 interface editorProp {
   userId: any;
@@ -120,7 +121,7 @@ const Editor: FC<editorProp> = ({ userId }) => {
   useEffect(() => {
     if (Object.keys(errors).length) {
       for (const [_key, value] of Object.entries(errors)) {
-        window.alert((value as { message: string }).message);
+        toast.error((value as { message: string }).message);
       }
     }
   }, [errors]);
@@ -132,13 +133,13 @@ const Editor: FC<editorProp> = ({ userId }) => {
       return data;
     },
     onError: () => {
-      window.alert("Editor submit Error");
+      toast.error("Post submit Error");
     },
     onSuccess: () => {
       // A WAY TO HANDLE CREATE POST AND REDIRECT IT
       router.refresh()
       ref.current?.blocks.clear();
-      window.alert("Successfully Posted");
+      toast.success("Successfull Posted")
       exitPopup();
     },
   });

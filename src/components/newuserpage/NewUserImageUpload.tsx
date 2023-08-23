@@ -5,6 +5,7 @@ import Image from 'next/image'
 import React,{useState} from 'react'
 import {IoAdd} from 'react-icons/io5'
 import { NewUserNextStepBtn } from '../button/NewUserButton'
+import toast from 'react-hot-toast'
 
 type NewUserImagetype = {
     Myimage: string
@@ -22,8 +23,7 @@ type NewUserImagetype = {
       const uploading = await handleImageUpload(file)
       setImg(uploading.file.url)
       const { data }=  await axios.patch('/api/user/avatar',{uploading})
-      console.log(uploading.file.url);
-      console.log(data);
+      toast.success('Avatar changed.')
       
     } catch (error) { 
       console.log(error);
