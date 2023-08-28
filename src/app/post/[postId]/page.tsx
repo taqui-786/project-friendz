@@ -95,7 +95,7 @@ const page = async ({ params }: postpagerpops) => {
       <div className="h-full w-full  md:w-[32%] flex">
         <div className="relative bg-white text-[#6c6f73] py-3 h-full w-[89%] flex flex-col">
           {/* **** HEAD --->  */}
-          <div className="w-full flex justify-start items-center p-3 bg-gray-500">
+          <div className="w-full flex justify-start items-center p-3 bg-transparent">
             {post?.author?.image && !cachedUser && (
               <Image
                 src={post.author.image}
