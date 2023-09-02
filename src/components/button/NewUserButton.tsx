@@ -23,7 +23,7 @@ export const NewUserNextStepBtn = (props: {next: number , prev:number , disable:
 
 
     return(
-        <div className={`p-5   items-center flex-wrap justify-end gap-1 ${params === 'newuser' ? 'flex' : 'hidden'}`}>
+        <div className={`p-5   items-center flex-wrap justify-end gap-1 ${params === '/newuser' ? 'flex' : 'hidden'}`}>
             <Button onClick={() => HandleNext(props.prev)} size={'sm'} variant={'outline'} >
             <BsArrowLeft className='mx-2' />
             Back

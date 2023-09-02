@@ -1,9 +1,10 @@
-import { AiOutlineHeart, AiOutlineShoppingCart } from "react-icons/ai"
+import { AiFillGithub  } from "react-icons/ai"
 import { SlideBarOuterButton } from "./button/SlideBarResponsiveExitButton"
-import { IoMdNotificationsOutline } from "react-icons/io"
+import { TiSocialLinkedin, TiSocialTwitter } from "react-icons/ti"
 import Image from "next/image"
 import { getAuthSession } from "@/lib/auth"
 import { FC } from "react"
+import Link from "next/link"
 
 interface TopPageNavbarprop{
     title: string
@@ -23,22 +24,22 @@ const TopPageNavbar:FC<TopPageNavbarprop> = async ({title}) =>{
 
         <div className="flex ml-auto items-center ">
           <div className="px-[6px] flex items-center py-2 grow-0 shrink-0 text-[#4a4a4a] relative ">
-            <div className="relative flex justify-center items-center w-[38px] h-[38px] rounded-sm ">
-              <AiOutlineHeart className="h-5 w-5 text-[#999] transition-all" />
-            </div>
+            <Link href={'https://www.linkedin.com/in/taqui-imam-88a7b325a/'} className="relative flex justify-center items-center w-[38px] h-[38px] rounded-sm decoration-transparent ">
+              <TiSocialTwitter className="h-5 w-5 text-[#999] hover:text-[#3180e1] transition-all" />
+            </Link>
           </div>
 
           <div className="px-[6px] flex items-center py-2 grow-0 shrink-0 text-[#4a4a4a] relative ">
-            <div className="relative flex justify-center items-center w-[38px] h-[38px] rounded-sm ">
 
-              <IoMdNotificationsOutline className="h-5 w-5 text-[#999] transition-all" />
-            </div>
+            <Link href={"https://www.linkedin.com/in/taqui-imam-88a7b325a/"} className="relative flex justify-center items-center w-[38px] h-[38px] rounded-sm  decoration-transparent">
+              <TiSocialLinkedin className="h-5 w-5 text-[#999] hover:text-[#3180e1] transition-all" />
+            </Link>
           </div>
           <div className="px-[6px] flex items-center py-2 grow-0 shrink-0 text-[#4a4a4a] relative ">
-            <div className="relative flex justify-center items-center w-[38px] h-[38px] rounded-sm ">
+            <Link href={"https://github.com/taqui-786"} className="relative flex justify-center items-center w-[38px] h-[38px] rounded-sm decoration-transparent ">
 
-              <AiOutlineShoppingCart className="h-5 w-5 text-[#999] transition-all" />
-            </div>
+              <AiFillGithub className="h-5 w-5 text-[#999] hover:text-[#3180e1] transition-all" />
+            </Link>
           </div>
           {/* profile opition --> */}
           <div className="flex justify-start items-center cursor-pointer grow-0 shrink-0 text-[#4a4a4a] px-3 py-2 relative">
