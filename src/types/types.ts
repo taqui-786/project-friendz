@@ -10,3 +10,14 @@ export type  user = {
 
 
 }
+export type sessionUserType = {
+  user: {
+    name: string;
+    email: string;
+    image: string;
+    id: string;
+    username: string;
+  }
+}
+
+

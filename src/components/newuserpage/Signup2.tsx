@@ -19,40 +19,49 @@ import { NewUserNextStepBtn } from "../button/NewUserButton";
 import { useMutation } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
-import toast from "react-hot-toast";
+import {toast} from "sonner";
 type FormData = z.infer<typeof UsernameValidator>;
-function Signup2() {
+function Signup2({existingUsername}:{existingUsername:string}) {
 const router = useRouter()
-const [btnDisable , setBtnDisable] = useState(true)
+const [btnDisable , setBtnDisable] = useState(!existingUsername ? true : false)
   const form = useForm<FormData>({
     resolver: zodResolver(UsernameValidator),
     defaultValues: {
-      username: "",
+      username: existingUsername,
     },
+    
   });
   
-  // 2. Define a submit handler.
+  
+  // 2. Defining a submit handler here --.
 const {mutate:updateUsername , isLoading} = useMutation({
+  mutationKey:['updateUsername'],
   mutationFn: async ({ username }: FormData) => {
     const payload: FormData = { username }
 
     const { data } = await axios.patch(`/api/user/username/`, payload)
     return data
   },
+
   onError: (err) => {
     if (err instanceof AxiosError) {
       if (err.response?.status === 409) {
-        return toast.error('Username already taken.')
-        
+        form.setError('username', {
+          type: 'manual',
+          message: 'Username already taken.'
+        })
+        return
       }
     }
-
-    return toast.error('Something went wrong.')
+    form.setError('username', {
+      type: 'manual',
+      message: 'Something went wrong.'
+    })
   },
   onSuccess: () => {
     setBtnDisable(false)
     router.refresh()
-    toast.success('Username Changed.')
+    toast.success('Username Changed successfully.')
   },
 })
   return (
@@ -73,7 +82,7 @@ const {mutate:updateUsername , isLoading} = useMutation({
                     This is your public display username.
                     
                   </FormDescription>
-                  <FormMessage />
+                  <FormMessage className="text-red-500" />
                 </FormItem>
               )}
             />

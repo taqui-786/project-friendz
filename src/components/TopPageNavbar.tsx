@@ -45,7 +45,7 @@ const TopPageNavbar:FC<TopPageNavbarprop> = async ({title}) =>{
           <div className="flex justify-start items-center cursor-pointer grow-0 shrink-0 text-[#4a4a4a] px-3 py-2 relative">
             <div className="relative max-h-[38px]">
 
-              {session?.user?.image && <Image src={session.user.image} alt='user' height={38} width={38} className='rounded-full max-h-[38px]' />}
+              {session?.user?.image && <Image src={session.user.image} alt='user' height={38} width={38} className='rounded-full max-h-auto w-auto' />}
             </div>
           </div>
         </div>

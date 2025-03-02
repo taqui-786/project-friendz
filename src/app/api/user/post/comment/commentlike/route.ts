@@ -4,14 +4,12 @@ import { CommentVoteValidator } from "@/lib/commentValidator";
 
 import { z } from "zod";
 
-
-
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { commentId } = CommentVoteValidator.parse(body)
-        const session = await getAuthSession();
-    
+    const { commentId } = CommentVoteValidator.parse(body);
+    const session = await getAuthSession();
+
     if (!session?.user) {
       return new Response("Unauthorized", { status: 401 });
     }
@@ -23,38 +21,22 @@ export async function POST(req: Request) {
       },
     });
 
-  
+    if (existingLike) {
+      await db.commentVote.delete({
+        where: {
+          id: existingLike.id,
+        },
+      });
 
-
-
-
-
-
-    if(existingLike){
-        await db.commentVote.delete({
-
-            where: {
-                id:existingLike.id
-            },
-        });
-      
-
-        return new Response('Deleted Comment like')
-        
-        
-    }else{
-        
-        await db.commentVote.create({
-            data: {
-                userId: session.user.id,
-                commentId,
-            },
-        });
-        return new Response('Liked Comment')
-
-        
-               
-              
+      return new Response("Deleted Comment like");
+    } else {
+      await db.commentVote.create({
+        data: {
+          userId: session.user.id,
+          commentId,
+        },
+      });
+      return new Response("Liked Comment");
     }
 
     return new Response("error");
@@ -63,9 +45,8 @@ export async function POST(req: Request) {
       return new Response(error.message, { status: 400 });
     }
 
-    return new Response(
-      "Could not like.. Please try later" + error,
-      { status: 500 }
-    );
+    return new Response("Could not like.. Please try later" + error, {
+      status: 500,
+    });
   }
 }

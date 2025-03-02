@@ -3,7 +3,7 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import QuerryProvider from '@/components/QuerryProvider'
-
+import { Toaster } from 'sonner';
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
@@ -19,6 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
+        <Toaster  richColors position="top-center" />
         <QuerryProvider>
 
           <Slidebar />

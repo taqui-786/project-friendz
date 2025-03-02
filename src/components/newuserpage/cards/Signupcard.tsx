@@ -4,7 +4,7 @@ import publicImg from "../../../../public/publicaccount.svg";
 import companyImg from "../../../../public/companyaccount.svg";
 import privateImg from "../../../../public/privateaccount.svg";
 import { AccountTypeSubmitBtn } from "@/components/button/NewUserButton";
-export const SignupcardOne = () => {
+export const SignupAsCompany = () => {
   return (
     <div className=' block shrink grow basis-0 p-3 mt-4 '>
       <div className="w-full bg-white border border-gray-300 rounded-lg p-6 text-center relative ">
@@ -20,7 +20,7 @@ export const SignupcardOne = () => {
     </div>
   )
 }
-export const SignupcardTwo = () => {
+export const SignupAsPublic = () => {
   return (
     <div className=' block shrink grow basis-0 p-3 mt-4 '>
       <div className="w-full bg-white border border-gray-300 rounded-lg p-6 text-center relative">
@@ -37,7 +37,7 @@ export const SignupcardTwo = () => {
     </div>
   )
 }
-export const SignupcardThree = () => {
+export const SignupAsPrivate = () => {
   return (
     <div className=' block shrink grow basis-0 p-3 mt-4 '>
       <div className="w-full bg-white border border-gray-300 rounded-lg p-6 text-center relative">

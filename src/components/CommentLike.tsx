@@ -2,76 +2,73 @@
 import { FC, useEffect, useState } from "react";
 import { AiFillHeart } from "react-icons/ai";
 import { Button } from "./ui/button";
-import { usePrevious } from "@mantine/hooks";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { CommentVoteRequest } from "@/lib/commentValidator";
 import axios, { AxiosError } from "axios";
+import { toast } from "sonner";
 
 interface CommmentLikeProps {
   commentId: string;
   votesAmt: number;
   currentVote?: any;
 }
+
 const CommmentLike: FC<CommmentLikeProps> = ({
   commentId,
-  votesAmt: _votesAmt,
-  currentVote: _currentVote,
+  votesAmt: initialVotesAmt,
+  currentVote: initialVote,
 }) => {
-  const [votesAmt, setVotesAmt] = useState<number>(_votesAmt);
-  const [currentVote, setCurrentVote] = useState(_currentVote);
-  const [liked,setLiked] = useState<boolean>(false)   
-  const prevLike = usePrevious(currentVote)
+  const [optimisticVotes, setOptimisticVotes] = useState<number>(initialVotesAmt);
+  const [optimisticLiked, setOptimisticLiked] = useState<boolean>(!!initialVote);
+  const queryClient = useQueryClient();
 
-
-
-  useEffect(()=>{
-    if(!_currentVote){
-        setLiked(false)
-    }else{
-        setLiked(true)
-    }
-    },[_currentVote])
-    // LIKE FUNCTION 
-    const {mutate: Like , isLoading} = useMutation({
-        mutationFn: async () => {
-            const payload: CommentVoteRequest = {
-              commentId,
-            }
+  const { mutate: like, isLoading } = useMutation({
+    mutationFn: async () => {
+      const payload: CommentVoteRequest = { commentId };
+      return await axios.post('/api/user/post/comment/commentlike', payload);
+    },
+    mutationKey: ['comment-like', commentId],
+    onError: (err) => {
+      // Revert optimistic update
+      setOptimisticVotes(initialVotesAmt);
+      setOptimisticLiked(!!initialVote);
       
-            await axios.post('/api/user/post/comment/commentlike', payload)
-          },
-          onError: (err) => {
-            setVotesAmt(prevLike)
-            setLiked(false)
-            if (err instanceof AxiosError) {
-                if (err.response?.status === 401) {
-                    return console.log('login first');
-    
-                }
-            }
-    
-            return window.alert(' like error ')
-          },
-          onMutate: () =>{
-            if( !liked){
-                setLiked(true)
-                setVotesAmt((prev) => prev + 1)
-            }else{
-                setLiked(false)
-                setVotesAmt((prev) => prev - 1)
-            }
-        },
-    })
+      if (err instanceof AxiosError) {
+        if (err.response?.status === 401) {
+          return toast.error('Please login to like comments');
+        }
+      }
+      return toast.error('Failed to update like');
+    },
+    onMutate: () => {
+      // Optimistic update
+      setOptimisticLiked((current) => !current);
+      setOptimisticVotes((prev) => prev + (optimisticLiked ? -1 : 1));
+    },
+    onSettled: () => {
+      // Invalidate and refetch
+      queryClient.invalidateQueries(['comments', commentId]);
+    },
+  });
 
   return (
     <>
-      <span className="pl-3 text-[#999] flex text-xs">
-        <AiFillHeart className="text-base" style={{color:!liked?"#888da8":"crimson"}} />
-        {votesAmt}
-      </span>
-      <Button variant="ghost" disabled={isLoading} size="sm" className="text-[#999]" isLoading={isLoading} onClick={() => Like()}>
-        Like
-      </Button>
+      <div className="pl-3 text-[#999] flex items-center gap-2 text-xs">
+        <Button
+          variant="ghost"
+          size="sm"
+          disabled={isLoading}
+          onClick={() => like()}
+          className="p-0 h-auto hover:bg-transparent"
+        >
+          <AiFillHeart 
+            className={`text-lg transition-colors ${
+              optimisticLiked ? 'text-red-500' : 'text-[#888da8]'
+            } hover:scale-110 active:scale-95`}
+          />
+        </Button>
+        <span>{optimisticVotes}</span>
+      </div>
     </>
   );
 };

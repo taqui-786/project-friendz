@@ -28,7 +28,7 @@ export const NewUserNextStepBtn = (props: {next: number , prev:number , disable:
             <BsArrowLeft className='mx-2' />
             Back
             </Button>
-            <Button disabled={props.disable} onClick={() => HandleNext(props.next)} size={'sm'} variant={'outline'} >
+            <Button disabled={props.disable} onClick={() => HandleNext(props.next)} size={'sm'} variant={'outline'} className="bg-green-100 text-primary hover:bg-green-200" >
                 Next
                 <BsArrowRight className="mx-2" />
             </Button>

@@ -1,113 +1,51 @@
 import { db } from "@/lib/Prisma.db";
 import { getAuthSession } from "@/lib/auth";
-import { redis } from "@/lib/redis";
 import { PostVoteValidator } from "@/types/PostLikeValidator";
-import { CachedPost } from "@/types/redis";
 import { z } from "zod";
-
-
 
 export async function POST(req: Request) {
   try {
-    const body = await req.json();
+    // Parse request and check auth in parallel
+    const [body, session] = await Promise.all([
+      req.json(),
+      getAuthSession()
+    ]);
+
     const { postId } = PostVoteValidator.parse(body);
-    const session = await getAuthSession();
     
     if (!session?.user) {
       return new Response("Unauthorized", { status: 401 });
     }
-    // check if user has already voted on this post
-    const existingLike = await db.like.findFirst({
+
+    // Use upsert with delete for atomic operation
+    const result = await db.like.deleteMany({
       where: {
         userId: session.user.id,
         postId,
       },
     });
 
-    const post = await db.post.findUnique({
-      where: {
-        id: postId,
-      },
-      include: {
-        author: true,
-        like: true,
-      },
-    });
-
-
-
-
-
-
-
-    if(existingLike){
-        await db.like.delete({
-
-            where: {
-                id:existingLike.id
-            },
-        });
-        
-          //@ts-ignore
-          const cachePayload: CachedPost = {
-            //@ts-ignore
-            authorUsername: post?.author?.username ?? '',
-            //@ts-ignore
-            content: JSON.stringify(post.content),
-            //@ts-ignore
-            id: post?.id,
-            //@ts-ignore
-            title: post?.title,
-            //@ts-ignore
-            createdAt: post?.createdAt,
-          }
-
-          await redis.hset(`post:${postId}`, cachePayload) // Store the post data as a hash
-
-        return new Response('reddis OK')
-      
-
-    }else{
-
-        await db.like.create({
-            data: {
-                userId: session.user.id,
-                postId,
-            },
-        });
-
-        
-                  //@ts-ignore
-                  const cachePayload: CachedPost = {
-                    //@ts-ignore
-                    authorUsername: post?.author?.username ?? '',
-                    //@ts-ignore
-                    content: JSON.stringify(post.content),
-                    //@ts-ignore
-                    id: post?.id,
-                    //@ts-ignore
-                    title: post?.title,
-                    //@ts-ignore
-                    createdAt: post?.createdAt,
-                  }
-        
-                  await redis.hset(`post:${postId}`, cachePayload) // Store the post data as a hash
-        
-                return new Response('reddis liked ')
-              
+    if (result.count === 0) {
+      // No like existed, so create one
+      await db.like.create({
+        data: {
+          userId: session.user.id,
+          postId,
+        },
+      });
+      return new Response('Liked successfully', { status: 200 });
     }
 
-    if (!post) {
-      return new Response("Post not found", { status: 404 });
-    }
-    return new Response("ok");
+    return new Response('Unliked successfully', { status: 200 });
+
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return new Response(error.message, { status: 400 });
+      return new Response("Invalid request data", { status: 400 });
     }
 
+    console.error('Like operation failed:', error);
     return new Response(
-      "Could not like.. Please try later" + error,
+      "Operation failed. Please try again later",
       { status: 500 }
     );
   }

@@ -4,6 +4,7 @@ import { FC } from "react";
 import Comments from "./Comments";
 import { getAuthSession } from "@/lib/auth";
 import { BsArrowReturnRight } from "react-icons/bs";
+import { CommentInputBox } from "./CustomComponents/CommentInputBox";
 
 type ExtendedComment = Comment & {
   votes: CommentVote[];
@@ -50,7 +51,7 @@ const CommentOuterBox = async ({ postId }: CommentOuterBoxProps) => {
         {/* COMMENTS  */}
         {comments
           .filter((comment) => !comment.replyToId)
-          .map((topLevelComment) => {
+          .map((topLevelComment, index, array) => {
             // CHECKING THAT COMMENT IS LIKED OR NOT
             const isLiked = topLevelComment.like.find(
               (vote) => vote.userId === session?.user.id
@@ -65,6 +66,7 @@ const CommentOuterBox = async ({ postId }: CommentOuterBoxProps) => {
                   postId={postId}
                   comment={topLevelComment}
                   key={topLevelComment.id}
+                  islastComment={index === array.length - 1}
                 />
                 {topLevelComment.replies
                   .sort((a, b) => b.like.length - a.like.length) // Sort replies by most liked
@@ -76,10 +78,7 @@ const CommentOuterBox = async ({ postId }: CommentOuterBoxProps) => {
                     const replyVoteAmt = reply?.like.length;
 
                     return (
-                      <div
-                        className="relative ml-10 h-fit w-fit"
-                        key={reply.id}
-                      >
+                      <div className="relative ml-10 h-fit " key={reply.id}>
                         <h3 className="absolute  -top-[20px] left-0 p-2">
                           <BsArrowReturnRight className="text-2xl text-[#999]" />{" "}
                         </h3>
@@ -87,7 +86,7 @@ const CommentOuterBox = async ({ postId }: CommentOuterBoxProps) => {
                           currentVote={replyVote}
                           votesAmt={replyVoteAmt}
                           postId={postId}
-                          comment={reply}
+                          comment={reply }
                         />
                       </div>
                     );
@@ -95,25 +94,9 @@ const CommentOuterBox = async ({ postId }: CommentOuterBoxProps) => {
               </>
             );
           })}
-
-        {/* COMMENT REPLY */}
-        {}
-
-        {/* <div className="flex items-center ml-10 pt-4 ">
-                            <figure className="mr-[10px] basis-0 grow-0 shrink-0 block ">
-                                <p className="h-8 w-8 block relative ">
-                                    {/* <Image src={''} alt='img' height={32} width={32} loading='eager' priority className='block h-auto w-full rounded-full' /> */}
-        {/* </p>
-                            </figure> */}
-        {/* <div className="p-4 rounded-md bg-white basis-auto grow shrink">
-                                <div className="text-sm font-medium">Dan Walker</div>
-                                <p className='text-xs text-[#999]'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros.</p>
-                                <div className="flex items-center pt-2">
-                                    <span className="px-3 text-[#999] block text-xs">28 min ago</span>
-                                </div>
-                            </div>
-                        </div>  */}
       </div>
+      {/* COMMENT SENT   INPUT BOX  */}
+      <CommentInputBox postId={postId} />
     </>
   );
 };

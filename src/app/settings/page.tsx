@@ -1,12 +1,14 @@
 import Signup2 from "@/components/newuserpage/Signup2";
 import Signup3 from "@/components/newuserpage/Signup3";
 import Signup4 from "@/components/newuserpage/Signup4";
+import { getAuthSession } from "@/lib/auth";
 import { Metadata } from "next";
 export const metadata: Metadata = {
   title: 'Settings',
   description: 'user setting page ',
 }
-const page = () => {
+const page = async () => {
+  const session = await getAuthSession()
   return (
     <>
       <div
@@ -28,7 +30,7 @@ const page = () => {
 
                   <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                     <div className="sm:col-span-4">
-                      <Signup2 />
+                      <Signup2 existingUsername={session?.user?.username as string} />
                     </div>
 
                     <div className="col-span-full">
@@ -36,7 +38,7 @@ const page = () => {
                     </div>
 
                     <div className="col-span-full">
-                      <Signup4 />
+                      <Signup4 userImage={session?.user?.image as string} />
                     </div>
                   </div>
                 </div>

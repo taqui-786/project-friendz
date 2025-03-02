@@ -36,6 +36,7 @@ const FollowButton: FC<FollowButtonprops> = ({
       };
       await axios.post("/api/user/follow", payload);
     },
+    mutationKey: ['follow',toFollow],
     onError: (err) => {
       setIsFollow(false);
       if (err instanceof AxiosError) {

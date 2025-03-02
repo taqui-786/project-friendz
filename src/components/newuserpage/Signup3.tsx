@@ -19,7 +19,7 @@ import { z } from "zod";
 import { useMutation } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
-import toast from "react-hot-toast";
+import {toast} from "sonner";
 
 type FormData = z.infer<typeof LocationAndBioValidator>;
 
@@ -32,6 +32,7 @@ function Signup3() {
       location: "",
       Bio: "",
     },
+ 
   });
 
   // 2. Define a submit handler.
@@ -77,7 +78,7 @@ function Signup3() {
                     <Input placeholder="Enter your city,state..." {...field} />
                   </FormControl>
 
-                  <FormMessage />
+                  <FormMessage className="text-red-500" />
                 </FormItem>
               )}
             />
@@ -95,7 +96,7 @@ function Signup3() {
                     />
                   </FormControl>
 
-                  <FormMessage />
+                  <FormMessage className="text-red-500" />
                 </FormItem>
               )}
             />

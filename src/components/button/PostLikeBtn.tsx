@@ -7,6 +7,7 @@ import {PostVoteRequest} from '@/types/PostLikeValidator'
 import axios, { AxiosError } from 'axios'
 import { Button } from '../ui/button'
 import toast from 'react-hot-toast'
+import { Loader } from 'lucide-react'
 
 interface postlikebtnprops{
 postData: any
@@ -42,6 +43,7 @@ const {mutate: like , isLoading} = useMutation({
         await axios.post('/api/user/post/newlike',payload)
 
     },
+    mutationKey: ['like',postId],
     onError: (err) => {
         setVotesAmt(prevLike)
         if (err instanceof AxiosError) {
@@ -77,7 +79,7 @@ const {mutate: like , isLoading} = useMutation({
                 <AiFillHeart className="h-[30px] w-[30px] " />
                 </Button>
                 
-                <Button  className='h-fit w-fit p-0 outline-none' variant="ghost" isLoading={isLoading} ><AiFillHeart className="h-[18px] w-[18px]  " style={{color:!liked?"#888da8":"crimson"}}  /></Button>
+                <Button  className='h-fit w-fit p-0 outline-none' variant="ghost"  >{isLoading ? <Loader className="h-[18px] w-[18px] text-gray-500 animate-spin  "  /> :  <AiFillHeart className="h-[18px] w-[18px]  " style={{color:!liked?"#888da8":"crimson"}}  />}</Button>
               
                 <span className="block text-sm mx-[6px]">{votesAmt}</span>
             </div>

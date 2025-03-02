@@ -60,7 +60,7 @@ type NewUserImagetype = {
             </small>
         </div>
     </div>
-    <NewUserNextStepBtn next={4} prev={2} disable={loading}/>
+    
 
               </>
     )

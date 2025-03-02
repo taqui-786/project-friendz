@@ -1,13 +1,12 @@
 import CommentInput from "@/components/CommentInput";
 import CommentOuterBox from "@/components/CommentOuterBox";
+import { CommentInputBox } from "@/components/CustomComponents/CommentInputBox";
 import EditorOutput from "@/components/EditorOutput";
 import ExitProfileBtn from "@/components/button/ExitProfileBtn";
 import FollowButton from "@/components/button/FollowButton";
 import PostLikeServer from "@/components/button/PostLikeServerside";
 import { db } from "@/lib/Prisma.db";
 import { getAuthSession } from "@/lib/auth";
-import { redis } from "@/lib/redis";
-import { CachedPost } from "@/types/redis";
 import { Like, User, Post } from "@prisma/client";
 import { Loader2 } from "lucide-react";
 import Image from "next/image";
@@ -25,36 +24,20 @@ export const dynamic = "force-dynamic";
 export const fetchCache = "force-no-store";
 const page = async ({ params }: postpagerpops) => {
   const session = await getAuthSession();
-  const cachedPost = (await redis.hgetall(
-    `post:${params.postId}`
-  )) as CachedPost;
-  let cachedUser;
-  if (cachedPost) {
-    cachedUser = await db.user.findUnique({
-      where: {
-        username: cachedPost.authorUsername,
-      },
-      
-    });
-  }
-  let post: (Post & { like: Like[]; author: User }) | null = null;
-
-  if (!cachedPost) {
-    post = await db.post.findFirst({
-      where: {
-        id: params.postId,
-      },
-      include: {
-        like: true,
-        author:true
-      },
-    });
-    
-  }
+  
+  const post = await db.post.findFirst({
+    where: {
+      id: params.postId,
+    },
+    include: {
+      like: true,
+      author: true
+    },
+  });
 
   const isFollowed = await db.user.findUnique({
     where:{
-      id: cachedUser?.id ?? post?.author.id
+      id: post?.author.id
     },
     include:{
       followers:true
@@ -64,7 +47,7 @@ const page = async ({ params }: postpagerpops) => {
     (val) => val.followerId === session?.user.id
   );
   
-  if (!post && !cachedPost) return notFound();
+  if (!post) return notFound();
 
   return (
     <div className="z-50 h-screen w-screen relative overflow-y-auto md:overflow-hidden grid md:flex   justify-center md:items-center  ">
@@ -79,12 +62,9 @@ const page = async ({ params }: postpagerpops) => {
             <div className="px-4 py-4 ">
               <div className="relative mx-h-80 overflow-hidden decoration-transparent">
                 <div>
-                  <h2 className="text-[#222] text-lg">
-                    {" "}
-                    {post?.title ?? cachedPost.title}
-                  </h2>
+                  <h2 className="text-[#222] text-lg">{post.title}</h2>
                 </div>
-                <EditorOutput content={post?.content ?? cachedPost.content} />
+                <EditorOutput content={post.content} />
               </div>
             </div>
             {/* FOOTER  */}
@@ -93,10 +73,11 @@ const page = async ({ params }: postpagerpops) => {
       </div>
 
       <div className="h-full w-full  md:w-[32%] flex">
-        <div className="relative bg-white text-[#6c6f73] py-3 h-full w-[89%] flex flex-col">
+        <div className="relative bg-[#f5f6f7]  text-[#6c6f73] py-3 h-full w-[89%] flex flex-col">
+          <div className="bg-white">
           {/* **** HEAD --->  */}
           <div className="w-full flex justify-start items-center p-3 bg-transparent">
-            {post?.author?.image && !cachedUser && (
+            {post.author.image && (
               <Image
                 src={post.author.image}
                 alt="user"
@@ -106,22 +87,10 @@ const page = async ({ params }: postpagerpops) => {
                 className="rounded-full w-[42px] h-[42px] max-h-[42px]"
               />
             )}
-            {cachedUser?.image && (
-              <Image
-                src={cachedUser.image}
-                alt="user"
-                height={42}
-                width={42}
-                loading="eager"
-                className="rounded-full w-auto h-auto max-h-[42px] "
-              />
-            )}
             <div className="px-[10px]">
-              <span className="block text-sm font-medium">
-                {cachedUser ? cachedUser?.name : post?.author.name}
-              </span>
-              <span className="block text-[.78rem] text-left text-[#999]">
-                <small>{format(cachedPost?.createdAt ?? post?.createdAt)}</small>
+              <span className="block text-sm font-medium text-black">{post.author.name}</span>
+              <span className="block text-xs text-left text-gray-500">
+                {format(post.createdAt)}
               </span>
             </div>
             {/* FOLLOW BUTTON  */}
@@ -137,7 +106,7 @@ const page = async ({ params }: postpagerpops) => {
               {/* LIKE SERVER SIDE  */}
               <Suspense fallback={<MyLoader />}>
                 <PostLikeServer
-                  postId={post?.id ?? cachedPost.id}
+                  postId={post.id}
                   getData={async () => {
                     return await db.post.findUnique({
                       where: {
@@ -164,20 +133,39 @@ const page = async ({ params }: postpagerpops) => {
                 </div>
               </div>
             </div>
-          </div>
+          </div></div>
           {/* COMMENT BOX ->  */}
           {/* <CommentOuterBox postId={params.postId} /> */}
           <Suspense
             fallback={
-              <Loader2 className="h-5 w-5 animate-spin text-zinc-500" />
+              <div className="flex flex-col gap-4 p-4">
+                {/* Multiple skeleton comments for better UX */}
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="flex items-start gap-3 animate-pulse">
+                    {/* Avatar skeleton */}
+                    <div className="w-8 h-8 bg-gray-200 rounded-full" />
+                    <div className="flex-1">
+                      {/* Username and time skeleton */}
+                      <div className="flex items-center gap-2 mb-2">
+                        <div className="h-4 w-24 bg-gray-200 rounded" />
+                        <div className="h-3 w-16 bg-gray-100 rounded" />
+                      </div>
+                      {/* Comment text skeleton */}
+                      <div className="space-y-2">
+                        <div className="h-4 w-3/4 bg-gray-100 rounded" />
+                        <div className="h-4 w-1/2 bg-gray-100 rounded" />
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
             }
           >
             {/* @ts-expect-error Server Component */}
-            <CommentOuterBox postId={post?.id ?? cachedPost.id} />
+            <CommentOuterBox postId={post.id} />
           </Suspense>
 
-          {/* COMMENT SENT   INPUT BOX  */}
-          <CommentInput postId={post?.id ?? cachedPost.id} />
+   
           {/* EXIT BUTTON  */}
         </div>
         <div className="relative z-50 bg-[#5596e6]  h-full w-[11%] pt-2">
